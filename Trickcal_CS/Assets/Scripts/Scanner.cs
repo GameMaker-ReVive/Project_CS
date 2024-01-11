@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -25,11 +26,16 @@ public class Scanner : MonoBehaviour
     Transform GetNearest()
     {
         Transform result = null;
-        float diff = 100; // 처음 계산을 위한 최소 거리
+        float diff = 10; // 처음 계산을 위한 최소 거리
 
         // 인식된 오브젝트마다 플에이어와의 거리 계산
         foreach (RaycastHit2D target in targets)
         {
+            Unit targetLogic = target.transform.gameObject.GetComponent<Unit>();
+
+            if (targetLogic.unitState == Unit.UnitState.Fight)
+                continue;
+
             Vector3 myPos = transform.position; // 플레이어 위치
             Vector3 targetPos = target.transform.position; // 인식된 오브젝트의 위치
             float curDiff = Vector3.Distance(myPos, targetPos); // Distance(A,B) : 벡터 A 와 B 의 거리를 계산해주는 함수
