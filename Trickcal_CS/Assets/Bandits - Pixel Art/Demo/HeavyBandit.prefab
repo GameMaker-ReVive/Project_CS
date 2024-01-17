@@ -84,7 +84,6 @@ GameObject:
   - component: {fileID: 212652212501150786}
   - component: {fileID: 50959880312528810}
   - component: {fileID: 61346583712760016}
-  - component: {fileID: -7983195951880474199}
   - component: {fileID: 3126108498941627400}
   m_Layer: 7
   m_Name: HeavyBandit
@@ -229,26 +228,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.8, y: 1.2}
   m_EdgeRadius: 0
---- !u!114 &-7983195951880474199
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1463392086428580}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ddf406346e42bfd42b76d3cfa6bb2201, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  unitState: 0
-  unitID: 1
-  health: 10
-  speed: 2
-  power: 10
-  attackLayer:
-    serializedVersion: 2
-    m_Bits: 64
 --- !u!114 &3126108498941627400
 MonoBehaviour:
   m_ObjectHideFlags: 0
