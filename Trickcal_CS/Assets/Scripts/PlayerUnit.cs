@@ -14,7 +14,7 @@ public class PlayerUnit : UnitBase
     Vector2 disVec; // 거리
     Vector2 nextVec; // 다음에 가야할 위치의 양
 
-    public float lerpTime = 1.0f;
+    public float lerpTime;
 
     void Awake()
     {
@@ -30,8 +30,9 @@ public class PlayerUnit : UnitBase
     void OnEnable()
     {
         Transform original = gameObject.transform;
+
         StartCoroutine(
-            lerpCoroutine(original.position, GameManager.instance.point, lerpTime));
+            lerpCoroutine(GameManager.instance.unitSpawnPoint[0].position, GameManager.instance.point, 3));
     }
 
     void Update()
@@ -98,17 +99,21 @@ public class PlayerUnit : UnitBase
 
     }
 
-    IEnumerator lerpCoroutine(Vector3 current, Vector3 target, float time)
+    IEnumerator lerpCoroutine(Vector3 current, Vector3 target, float speed)
     {
+        float distance = Vector3.Distance(current, target);
+        float time = distance / speed;
+
         float elapsedTime = 0.0f;
 
         this.transform.position = current;
         while (elapsedTime < time)
         {
-            elapsedTime += (Time.deltaTime);
+            elapsedTime += Time.deltaTime;
 
-            this.transform.position
-                = Vector3.Lerp(current, target, elapsedTime / time);
+            this.transform.position = Vector3.Lerp(current, target, elapsedTime / time);
+
+            anim.SetInteger("AnimState", 2);
 
             yield return null;
         }
