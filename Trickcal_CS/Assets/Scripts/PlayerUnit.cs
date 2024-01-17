@@ -14,6 +14,8 @@ public class PlayerUnit : UnitBase
     Vector2 disVec; // 거리
     Vector2 nextVec; // 다음에 가야할 위치의 양
 
+    public float lerpTime = 1.0f;
+
     void Awake()
     {
         rigid = GetComponent<Rigidbody2D>();
@@ -25,9 +27,15 @@ public class PlayerUnit : UnitBase
         moveDir = Vector3.right;
     }
 
+    void OnEnable()
+    {
+        Transform original = gameObject.transform;
+        StartCoroutine(
+            lerpCoroutine(original.position, GameManager.instance.point, lerpTime));
+    }
+
     void Update()
     {
-        StartMove();
         AttackRay();
     }
 
@@ -90,15 +98,24 @@ public class PlayerUnit : UnitBase
 
     }
 
-    void StartMove()
+    IEnumerator lerpCoroutine(Vector3 current, Vector3 target, float time)
     {
-        disVec = GameManager.instance.point - transform.position;
+        float elapsedTime = 0.0f;
 
-        // 이동
-        nextVec = disVec.normalized * speed * Time.fixedDeltaTime;
-        rigid.MovePosition(rigid.position + nextVec);
-        rigid.velocity = Vector2.zero; // 물리 속도가 MovePosition 이동에 영향을 주지 않도록 속도 제거
-        unitState = UnitState.Move;
+        this.transform.position = current;
+        while (elapsedTime < time)
+        {
+            elapsedTime += (Time.deltaTime);
+
+            this.transform.position
+                = Vector3.Lerp(current, target, elapsedTime / time);
+
+            yield return null;
+        }
+
+        transform.position = target;
+
+        yield return null;
     }
 
     void OnDrawGizmosSelected()
