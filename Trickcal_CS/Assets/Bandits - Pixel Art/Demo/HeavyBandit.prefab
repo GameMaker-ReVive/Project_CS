@@ -83,8 +83,9 @@ GameObject:
   - component: {fileID: 95734438044755836}
   - component: {fileID: 212652212501150786}
   - component: {fileID: 50959880312528810}
-  - component: {fileID: 61346583712760016}
+  - component: {fileID: 7805071957398640915}
   - component: {fileID: 3126108498941627400}
+  - component: {fileID: -6318661770548894471}
   m_Layer: 7
   m_Name: HeavyBandit
   m_TagString: Player
@@ -202,7 +203,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!61 &61346583712760016
+--- !u!61 &7805071957398640915
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -215,7 +216,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.02, y: 0.662}
+  m_Offset: {x: 0, y: 0.32}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0}
@@ -226,8 +227,8 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.8, y: 1.2}
-  m_EdgeRadius: 0
+  m_Size: {x: 0.2, y: 0.1}
+  m_EdgeRadius: 0.2
 --- !u!114 &3126108498941627400
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -245,3 +246,23 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   nearestTarget: {fileID: 0}
+--- !u!114 &-6318661770548894471
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1463392086428580}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f2227b59d57f164e845f3a401179b2d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unitState: 0
+  unitID: 1
+  health: 10
+  speed: 2
+  power: 4
+  attackLayer:
+    serializedVersion: 2
+    m_Bits: 320

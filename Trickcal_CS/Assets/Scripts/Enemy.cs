@@ -2,15 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy : Unit
+public class Enemy : UnitBase
 {
     Scanner scanner;
     Rigidbody2D rigid;
     Animator anim;
     SpriteRenderer renderer;
 
-    Vector3 moveDir;
     public LayerMask attackLayer;
+    Vector2 moveDir; //  방향
+    Vector2 disVec; // 거리
+    Vector2 nextVec; // 다음에 가야할 위치의 양
 
     void Awake()
     {
@@ -19,36 +21,13 @@ public class Enemy : Unit
         renderer = GetComponent<SpriteRenderer>();
         scanner = GetComponentInChildren<Scanner>();
 
-        unitState = UnitState.Idle;
-
-        switch (unitID)
-        {
-            case 0:
-                moveDir = Vector3.right;
-                break;
-            case 1:
-                moveDir = Vector3.left;
-                break;
-        }
+        unitState = UnitState.Move;
+        moveDir = Vector3.left;
     }
 
     void Update()
     {
-        if (unitState != UnitState.Fight)
-        {
-            Scanner();
-        }
         AttackRay();
-
-
-        if (renderer.flipX)
-        {
-            moveDir = Vector3.right;
-        }
-        else
-        {
-            moveDir = Vector3.left;
-        }
     }
 
     void Scanner()
@@ -56,79 +35,54 @@ public class Enemy : Unit
         if (scanner.nearestTarget)
         {
             // 위치 차이 = 타겟 위치 - 나의 위치
-            Vector2 dirVec = (Vector2)scanner.nearestTarget.position - rigid.position; // 방향
-            Vector2 nextVec = dirVec.normalized * speed * Time.fixedDeltaTime;  // 다음에 가야할 위치의 양
-            rigid.MovePosition(rigid.position + nextVec);
-            rigid.velocity = Vector2.zero; // 물리 속도가 MovePosition 이동에 영향을 주지 않도록 속도 제거
+            disVec = (Vector2)scanner.nearestTarget.position - rigid.position;
 
-            // 가는 방향에 따라 moveDir 변경
-            if (dirVec.x > 0)
+            // 가는 방향에 따라 Sprite 방향 변경
+            if (disVec.x > 0)
             {
                 renderer.flipX = true;
+                moveDir = Vector2.right;
             }
-            else if (dirVec.x < 0)
+            else if (disVec.x < 0)
             {
                 renderer.flipX = false;
+                moveDir = Vector2.left;
             }
-
-            anim.SetInteger("AnimState", 2);
-
-            unitState = UnitState.Move;
         }
         else
         {
-            switch (unitID)
-            {
-                case 0:
-                    moveDir = Vector2.zero;
-                    unitState = UnitState.Idle;
-                    anim.SetInteger("AnimState", 0);
-                    break;
-                case 1:
-                    transform.position += moveDir * speed * Time.deltaTime;
-                    anim.SetInteger("AnimState", 2);
-                    unitState = UnitState.Move;
-                    moveDir = Vector3.left;
-                    renderer.flipX = false;
-                    break;
-            }
+            disVec = Vector2.left;
+            renderer.flipX = false;
         }
+
+        // 이동
+        nextVec = disVec.normalized * speed * Time.fixedDeltaTime;
+        rigid.MovePosition(rigid.position + nextVec);
+        rigid.velocity = Vector2.zero; // 물리 속도가 MovePosition 이동에 영향을 주지 않도록 속도 제거
+        unitState = UnitState.Move;
+
+        anim.SetInteger("AnimState", 2);
     }
 
     void AttackRay()
     {
-        Collider2D attackTarget = Physics2D.OverlapBox(transform.position + new Vector3(moveDir.x * 0.6f, 0.6f, 0), new Vector2(0.5f, 1.2f), 0, attackLayer);
+        Collider2D attackTarget = Physics2D.OverlapBox(transform.position + new Vector3(moveDir.x * 0.45f, 0.3f, 0), new Vector2(0.3f, 0.5f), 0, attackLayer);
 
         if (attackTarget != null)
         {
-            Unit targetLogic = attackTarget.gameObject.GetComponent<Unit>();
+            PlayerUnit targetLogic = attackTarget.gameObject.GetComponent<PlayerUnit>();
 
             unitState = UnitState.Fight;
             anim.SetInteger("AnimState", 0);
 
-            switch (unitID)
-            {
-                case 0:
-                    gameObject.layer = 8;
-                    break;
-                case 1:
-                    gameObject.layer = 9;
-                    break;
-            }
+            gameObject.layer = 9;
         }
         else
         {
-            unitState = UnitState.Move;
+            gameObject.layer = 7;
 
-            switch (unitID)
-            {
-                case 0:
-                    gameObject.layer = 6;
-                    break;
-                case 1:
-                    gameObject.layer = 7;
-                    break;
-            }
+            // AttackRay 에 인식되는 오브젝트가 없는 경우, 다시 스캔 시작
+            Scanner();
         }
 
     }
@@ -136,7 +90,7 @@ public class Enemy : Unit
     void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.blue;
-        Gizmos.DrawWireCube(transform.position + new Vector3(moveDir.x * 0.6f, 0.6f, 0), new Vector2(0.5f, 1.2f));
+        Gizmos.DrawWireCube(transform.position + new Vector3(moveDir.x * 0.45f, 0.3f, 0), new Vector2(0.3f, 0.5f));
     }
 
 }

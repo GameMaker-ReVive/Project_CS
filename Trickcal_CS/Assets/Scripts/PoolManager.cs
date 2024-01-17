@@ -51,11 +51,10 @@ public class PoolManager : MonoBehaviour
         switch(index)
         {
             case 0:
-                ran = Random.Range(0, 3);
-                select.transform.position = GameManager.instance.unitSpawnPoint[ran].position;
+                select.transform.position = GameManager.instance.unitSpawnPoint[0].position;
                 break;
             case 1:
-                ran = Random.Range(3, 6);
+                ran = Random.Range(1, 4);
                 select.transform.position = GameManager.instance.unitSpawnPoint[ran].position;
                 break;
         }

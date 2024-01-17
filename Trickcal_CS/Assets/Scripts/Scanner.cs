@@ -31,9 +31,9 @@ public class Scanner : MonoBehaviour
         // 인식된 오브젝트마다 플에이어와의 거리 계산
         foreach (RaycastHit2D target in targets)
         {
-            Unit targetLogic = target.transform.gameObject.GetComponent<Unit>();
+            UnitBase targetLogic = target.transform.gameObject.GetComponent<UnitBase>();
 
-            if (targetLogic.unitState == Unit.UnitState.Fight)
+            if (targetLogic.unitState == UnitBase.UnitState.Fight)
                 continue;
 
             Vector3 myPos = transform.position; // 플레이어 위치
