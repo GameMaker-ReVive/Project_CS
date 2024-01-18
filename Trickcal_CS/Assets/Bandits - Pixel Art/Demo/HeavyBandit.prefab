@@ -244,7 +244,7 @@ MonoBehaviour:
   scanRange: 7
   targetLayer:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 320
   nearestTarget: {fileID: 0}
 --- !u!114 &-6318661770548894471
 MonoBehaviour:
