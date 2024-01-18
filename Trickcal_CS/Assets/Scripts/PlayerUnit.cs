@@ -47,9 +47,6 @@ public class PlayerUnit : UnitBase
     {
         AttackRay();
         Animation();
-
-        Debug.Log("unitState   " + unitState);
-        Debug.Log("CurrentAnimation   " + CurrentAnimation);
     }
 
     void Scanner()
