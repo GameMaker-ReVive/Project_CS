@@ -1,0 +1,93 @@
+Erpin.png
+size:1695,1289
+filter:Linear,Linear
+pma:true
+scale:0.5
+arm L
+bounds:1023,19,138,184
+offsets:0,0,138,185
+rotate:90
+arm R T
+bounds:1328,2,53,106
+rotate:90
+arm R U
+bounds:1458,191,134,74
+body T
+bounds:1209,16,188,117
+rotate:90
+body T Veil
+bounds:902,33,119,140
+offsets:0,0,119,151
+body U
+bounds:1199,516,269,187
+offsets:0,6,269,193
+rotate:90
+body U Inside
+bounds:716,214,269,197
+rotate:90
+cloak
+bounds:665,787,633,500
+cloakShoulders
+bounds:1584,336,211,82
+rotate:90
+eyebrow
+bounds:1652,1119,168,35
+offsets:1,1,169,36
+rotate:90
+face
+bounds:915,175,308,143
+rotate:90
+hair B
+bounds:2,454,661,833
+hair F
+bounds:1328,57,231,132
+hair F Shadow
+bounds:1594,124,210,73
+rotate:90
+hair L
+bounds:1585,549,105,277
+head
+bounds:1300,1030,350,257
+leg L
+bounds:419,29,159,315
+rotate:90
+leg R
+bounds:1300,828,200,315
+rotate:90
+magicWand  Jewel F
+bounds:1617,913,75,115
+magicWand Jewal Side1
+bounds:1331,213,301,125
+rotate:90
+magicWand Jewal Side2
+bounds:665,485,277,300
+magicWand Jewel L
+bounds:1436,6,49,98
+rotate:90
+magicWand Jewel R
+bounds:1617,829,82,59
+rotate:90
+magicWandFlag L
+bounds:1458,267,124,290
+offsets:0,0,124,293
+magicWandFlag R
+bounds:1179,206,150,308
+offsets:0,0,150,311
+magicWandHaed Ring
+bounds:944,521,253,264
+magicWandStick
+bounds:2,190,262,712
+rotate:90
+neck
+bounds:1561,67,69,55
+pigtails L
+bounds:2,25,163,415
+rotate:90
+pigtails R
+bounds:1060,159,117,360
+pouch
+bounds:1652,1043,41,74
+wing1
+bounds:736,6,164,206
+wing2
+bounds:1388,559,195,267
