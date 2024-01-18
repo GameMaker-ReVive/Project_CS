@@ -66,7 +66,7 @@ public class Enemy : UnitBase
 
     void AttackRay()
     {
-        Collider2D attackTarget = Physics2D.OverlapBox(transform.position + new Vector3(moveDir.x * 0.45f, 0.3f, 0), new Vector2(0.3f, 0.5f), 0, attackLayer);
+        Collider2D attackTarget = Physics2D.OverlapBox(transform.position + new Vector3(moveDir.x * 0.45f, 0.3f, 0), new Vector2(0.6f, 0.5f), 0, attackLayer);
 
         if (attackTarget != null)
         {
@@ -90,7 +90,7 @@ public class Enemy : UnitBase
     void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.blue;
-        Gizmos.DrawWireCube(transform.position + new Vector3(moveDir.x * 0.45f, 0.3f, 0), new Vector2(0.3f, 0.5f));
+        Gizmos.DrawWireCube(transform.position + new Vector3(moveDir.x * 0.45f, 0.3f, 0), new Vector2(0.6f, 0.5f));
     }
 
 }
