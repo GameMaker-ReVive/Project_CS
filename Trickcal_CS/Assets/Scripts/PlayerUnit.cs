@@ -76,9 +76,12 @@ public class PlayerUnit : UnitBase
         }
         else
         {
-            moveDir = Vector2.zero;
-            transform.localScale = new Vector3(1f, 1f, 1f);
-            unitState = UnitState.Idle;
+            if(startMoveFinish)
+            {
+                moveDir = Vector2.zero;
+                transform.localScale = new Vector3(1f, 1f, 1f);
+                unitState = UnitState.Idle;
+            }
         }
     }
 
@@ -100,10 +103,7 @@ public class PlayerUnit : UnitBase
             gameObject.layer = 6;
 
             // AttackRay 에 인식되는 오브젝트가 없는 경우, 다시 스캔 시작
-            if(startMoveFinish)
-            {
-                Scanner();
-            }
+            Scanner();
         }
 
     }
@@ -147,7 +147,7 @@ public class PlayerUnit : UnitBase
         float elapsedTime = 0.0f;
 
         this.transform.position = current;
-        while (elapsedTime < time)
+        while (elapsedTime < time && !scanner.nearestTarget)
         {
             elapsedTime += Time.deltaTime;
 
@@ -160,7 +160,6 @@ public class PlayerUnit : UnitBase
         }
 
         startMoveFinish = true;
-        transform.position = target;
 
         yield return null;
     }
