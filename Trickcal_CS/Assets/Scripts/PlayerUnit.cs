@@ -55,6 +55,7 @@ public class PlayerUnit : UnitBase
         {
             // 위치 차이 = 타겟 위치 - 나의 위치
             disVec = (Vector2)scanner.nearestTarget.position - rigid.position;
+            Enemy enemyLogic = scanner.nearestTarget.GetComponent<Enemy>();
 
             // 이동
             nextVec = disVec.normalized * speed * Time.deltaTime;
@@ -87,7 +88,7 @@ public class PlayerUnit : UnitBase
 
     void AttackRay()
     {
-        Collider2D attackTarget = Physics2D.OverlapBox(transform.position + new Vector3(moveDir.x * 0.45f, 0.3f, 0), new Vector2(0.3f, 0.5f), 0, attackLayer);
+        Collider2D attackTarget = Physics2D.OverlapBox(transform.position + new Vector3(moveDir.x * 0.45f, 0.3f, 0), new Vector2(0.5f, 0.5f), 0, attackLayer);
 
         if (attackTarget != null)
         {
@@ -106,6 +107,12 @@ public class PlayerUnit : UnitBase
             Scanner();
         }
 
+    }
+
+    void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireCube(transform.position + new Vector3(moveDir.x * 0.45f, 0.3f, 0), new Vector2(0.5f, 0.5f));
     }
 
     void Animation()
@@ -195,11 +202,5 @@ public class PlayerUnit : UnitBase
 
         //짧게 작성한다 요렇게..
         //_AsyncAnimation(AnimClip[(int)AnimState], true, 1f);
-    }
-
-    void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.blue;
-        Gizmos.DrawWireCube(transform.position + new Vector3(moveDir.x * 0.45f, 0.3f, 0), new Vector2(0.3f, 0.5f));
     }
 }
