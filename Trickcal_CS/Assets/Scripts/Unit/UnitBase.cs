@@ -8,7 +8,8 @@ public class UnitBase : MonoBehaviour
     [Header("# UnitState")]
     public UnitState unitState;
     public int unitID;
-    public int health;
-    public int speed;
-    public int power;
+    public float health;
+    public float speed;
+    public float power;
+    public float attackTime;
 }

@@ -233,12 +233,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unitState: 0
   unitID: 0
-  health: 10
-  speed: 2
-  power: 5
+  health: 0
+  speed: 0
+  power: 0
+  attackTime: 0
   attackLayer:
     serializedVersion: 2
     m_Bits: 640
+  unitData: {fileID: 11400000, guid: b206c7258c135fa4aaa4b9aaa597e48d, type: 2}
   skeletonAnimation: {fileID: 2995921207297475355}
   AnimClip:
   - {fileID: 11400000, guid: 9aa9ff3994aaa13429ac7eb97c4b4d79, type: 2}

@@ -9,11 +9,13 @@ public class PlayerUnit : UnitBase
     Scanner scanner;
     Rigidbody2D rigid;
 
+    [Header("# Unit Setting")]
     public LayerMask attackLayer;
     Vector2 moveDir; //  방향
     Vector2 disVec; // 거리
     Vector2 nextVec; // 다음에 가야할 위치의 양
     bool startMoveFinish = false;
+    public UnitData unitData;
 
     [Header("# Spine")]
     //스파인 애니메이션을 위한 것
@@ -31,22 +33,37 @@ public class PlayerUnit : UnitBase
         rigid = GetComponent<Rigidbody2D>();
         scanner = GetComponentInChildren<Scanner>();
 
-        unitState = UnitState.Move;
-        moveDir = Vector3.right;
+        StateSetting();
     }
 
     void OnEnable()
     {
-        Transform original = gameObject.transform;
+        StateSetting();
+        unitState = UnitState.Move;
+        moveDir = Vector3.right;
 
         StartCoroutine(
             lerpCoroutine(GameManager.instance.unitSpawnPoint[0].position, GameManager.instance.point, speed));
+    }
+
+    void OnDisable()
+    {
+        Die();
     }
 
     void Update()
     {
         AttackRay();
         Animation();
+    }
+
+    void StateSetting()
+    {
+        unitID = unitData.UnitID;
+        health = unitData.Health;
+        speed = unitData.Speed;
+        power = unitData.Power;
+        attackTime = 0f;
     }
 
     void Scanner()
@@ -97,12 +114,22 @@ public class PlayerUnit : UnitBase
             unitState = UnitState.Fight;
             startMoveFinish = true;
 
+            // 적이 인식되면 attackTime 증가 및 공격 함수 실행
+            attackTime += Time.deltaTime;
+
+            if(attackTime >= unitData.AttackTime)
+            {
+                StartCoroutine("Attack");
+                attackTime = 0;
+                unitState = UnitState.Fight;
+            }
+
             gameObject.layer = 8;
         }
         else
         {
             gameObject.layer = 6;
-
+            
             // AttackRay 에 인식되는 오브젝트가 없는 경우, 다시 스캔 시작
             Scanner();
         }
@@ -144,6 +171,30 @@ public class PlayerUnit : UnitBase
 
         //애니메이션 적용
         _AsyncAnimation(AnimClip[animIndex], true, 1f);
+    }
+
+    void Attack()
+    {
+        Debug.Log("Attack");
+
+        unitState = UnitState.Attack;
+    }
+
+    void Damaged()
+    {
+        if(health == 0)
+        {
+            Die();
+        }
+    }
+
+    void Die()
+    {
+        unitState = UnitState.Die;
+        attackTime = 0;
+        startMoveFinish = false;
+        moveDir = Vector2.zero;
+        disVec = Vector2.zero;
     }
 
     IEnumerator lerpCoroutine(Vector3 current, Vector3 target, float speed)
